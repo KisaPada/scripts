@@ -1,5 +1,4 @@
 /* TODO
- * - set up arg parsing (primitive)
  * - add functionality for hours, minutes, seconds, etc.
  * - clean up timer printing
  * - set up arg parsing (robust)
@@ -12,6 +11,10 @@
 void print_help_dialog();
 
 int main(int argc, char* argv[]) {
+    int opt = -1;
+    int time_in_seconds = 0;
+    int hours = 0, minutes = 0, seconds = 0;
+
     // printing args
     printf("argc: %d\n", argc);
     for(int i = 0; i < argc; ++i) {
@@ -23,8 +26,28 @@ int main(int argc, char* argv[]) {
         print_help_dialog();
         return 1;
     }
-    for(int i = 0; i < argc; ++i) {
-
+    while((opt = getopt(argc, argv, "hT:H:m:s:t:")) != -1) {
+        switch(opt) {
+            case 'h':
+                print_help_dialog();
+                return 0;
+            case 'T': // accept an argument in the form HH:mm:ss
+                break;
+            case 'H':
+                break;
+            case 'm':
+                break;
+            case 't': // same as case 's'
+            case 's':
+                break;
+            default:
+                fprintf(stderr, "<default case placeholder help dialog>\n");
+                return 1;
+        }
+    }
+    if(optind < argc) { // checking for non-option arguments
+        fprintf(stderr, "unexpected argument: %s\n", argv[optind]);
+        return 1;
     }
 
     // running the timer
