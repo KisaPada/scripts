@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # TODO: Add a `-x` option (or similar) for excluding weekends from the output
+# TODO: Adjust to produce Obsidian-ready calendars (link previous & next, etc.)
 
 # Standard Library
 import argparse
