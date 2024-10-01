@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+
+# TODO: add commandline options (argparse)
+
+import os
+import random
+import string
+
+valid_chars = string.ascii_lowercase + string.digits
+
+dir_list = os.listdir()
+for file in dir_list:
+    if '.' not in file:
+        continue
+    rand_filename = ''.join(random.choices(valid_chars, k=8)) + '.' + file.split('.')[-1]
+    os.rename(file, rand_filename)
+    print(file + " -> " + rand_filename)
