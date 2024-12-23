@@ -41,8 +41,8 @@ def _generate_calendar(
         print(f"[[{prev_year}-{prev_month:02d}]]", end='\n\n', file=file)
         for date in cal.itermonthdates(year, month):
             if date.month == month:
-                print(date.strftime(format_string), end="\n\n", file=file)
-        print(f"[[{next_year}-{next_month:02d}]]", end='\n', file=file)
+                print(date.strftime(format_string), end="\n", file=file)
+        print(f"\n[[{next_year}-{next_month:02d}]]", end='\n', file=file)
 
 
     return 0 # success
