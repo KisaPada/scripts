@@ -1,24 +1,23 @@
 #!/usr/bin/env python3
 
-# TODO: Add a `-x` option (or similar) for excluding weekends from the output
-# TODO: Adjust to produce Obsidian-ready calendars (link previous & next, etc.)
+#  TODO: rewrite the whole dang thing
 
-# Standard Library
 import argparse
 import calendar
 import datetime
 import os
 import sys
 
-def _generate_calendar(
-    year:int,
-    month:int,
-    prev_year:int,
-    prev_month:int,
-    next_year:int,
-    next_month:int,
-    force:bool=False,
-    weekday:bool=False
+
+def _generate_calendar(  # {
+    year: int,
+    month: int,
+    prev_year: int,
+    prev_month: int,
+    next_year: int,
+    next_month: int,
+    force: bool = False,
+    weekday: bool = False
 ) -> int:
     # Generate file name
     file_name = f"{year}-{month:02d}.md"
@@ -26,7 +25,7 @@ def _generate_calendar(
     # Don't overwrite if already exists
     if os.path.exists(file_name) and not force:
         print(f"{file_name} already exists.")
-        return 1 # failure
+        return 1  # failure
 
     # Determine the format string
     if not weekday:
@@ -44,12 +43,13 @@ def _generate_calendar(
                 print(date.strftime(format_string), end="\n", file=file)
         print(f"\n[[{next_year}-{next_month:02d}]]", end='\n', file=file)
 
+    return 0  # success
+# }
 
-    return 0 # success
 
-def _get_target_month(
-    current_date:datetime.datetime,
-    offset:int=0
+def _get_target_month(  # {
+    current_date: datetime.datetime,
+    offset: int = 0
 ) -> tuple[int, int]:
     year = current_date.year
     month = current_date.month + offset
@@ -60,8 +60,10 @@ def _get_target_month(
         month += 12
         year -= 1
     return year, month
+# }
 
-def main():
+
+if __name__ == "__main__":  # {
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description="Generate a monthly calendar file.")
     parser.add_argument("-c", "--current", action="store_true", help="generate calendar for current month")
@@ -91,7 +93,7 @@ def main():
     # Year option
     if args.year:
         current_date_list = []
-        for month in range(1,13):
+        for month in range(1, 13):
             try:
                 current_date_list.append(datetime.datetime.strptime(f"{args.year}-{month}-01", "%Y-%m-%d"))
             except ValueError:
@@ -133,8 +135,5 @@ def main():
             year, month = _get_target_month(current_date, offset=-1)
             next_year, next_month = _get_target_month(current_date, offset=-0)
             rtn += _generate_calendar(year, month, prev_year, prev_month, next_year, next_month, force, weekday)
-
-    return rtn
-
-if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(rtn)
+# }
