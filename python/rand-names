@@ -11,7 +11,7 @@ if __name__ == "__main__":  # {
 
     dir_list = os.listdir()
     for file in dir_list:
-        if '.' not in file:
+        if (file[0] == '.') or ('.' not in file):
             continue
         rand_filename = ''.join(random.choices(valid_chars, k=8)) + '.' + file.split('.')[-1]
         os.rename(file, rand_filename)
