@@ -12,6 +12,15 @@ void clearLine() {
     return;
 }
 
+void formatTimer(char *formatStr, int timerLen) {
+    if (timerLen > 60) {
+        snprintf(formatStr, 32, "%dm", (int)(timerLen/60));
+    } else {
+        snprintf(formatStr, 32, "%ds", timerLen);
+    }
+    return;
+}
+
 int main(int argc, char **argv) {
     if (argc != 2) {
         printf("ERROR: Takes exactly 1 arg.\n");
@@ -41,14 +50,17 @@ int main(int argc, char **argv) {
         }
     }
 
+    char formatStr[32] = {0};
     while (timerLen > 0) {
         clearLine();
-        printf("Timer: %d", timerLen);
+        formatTimer(formatStr, timerLen);
+        printf("Timer: %s", formatStr);
         fflush(stdout);
         timerLen--;
         sleep(1);
     }
-    printf("\n");
+    clearLine();
+    printf("timer: 0s\n");
 
     printf("DING DING DING\n");
     system(
