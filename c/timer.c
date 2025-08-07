@@ -3,6 +3,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#define STRBUF 32
+
 void clearLine() {
     printf("\r");
     for (int i = 0; i < 32; i++) {
@@ -13,10 +15,15 @@ void clearLine() {
 }
 
 void formatTimer(char *formatStr, int timerLen) {
+    int prntRtn = 0;
     if (timerLen > 60) {
-        snprintf(formatStr, 32, "%dm", (int)(timerLen/60));
+        prntRtn = snprintf(formatStr, STRBUF, "%dm", (int)(timerLen/60));
     } else {
-        snprintf(formatStr, 32, "%ds", timerLen);
+        prntRtn = snprintf(formatStr, STRBUF, "%ds", timerLen);
+    }
+
+    if (prntRtn >= STRBUF) {
+        printf("ERROR: snprintf output truncated\n");
     }
     return;
 }
@@ -26,22 +33,29 @@ int main(int argc, char **argv) {
         printf("ERROR: Takes exactly 1 arg.\n");
         return 1;
     }
+    if (strlen(argv[1]) + 1 >= STRBUF) {
+        printf("ERROR: argv[1] too long.\n");
+        return 1;
+    }
 
-    char unit = argv[1][strlen(argv[1]) - 1];
-    argv[1][strlen(argv[1]) - 1] = '\0';
+    char argv1[STRBUF] = {0};
+    strcpy(argv1, argv[1]);
+
+    char unit = argv1[strlen(argv1) - 1];
+    argv1[strlen(argv1) - 1] = '\0';
 
     int timerLen = 0;
     switch(unit) {
         case 'h': {
-            timerLen = (int)(atof(argv[1]) * 3600);
+            timerLen = (int)(atof(argv1) * 3600);
             break;
         }
         case 'm': {
-            timerLen = (int)(atof(argv[1]) * 60);
+            timerLen = (int)(atof(argv1) * 60);
             break;
         }
         case 's': {
-            timerLen = (int)atof(argv[1]);
+            timerLen = (int)atof(argv1);
             break;
         }
         default: {
@@ -50,7 +64,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    char formatStr[32] = {0};
+    char formatStr[STRBUF] = {0};
     while (timerLen > 0) {
         clearLine();
         formatTimer(formatStr, timerLen);
@@ -66,8 +80,9 @@ int main(int argc, char **argv) {
     system(
         "mpv "
         "/home/jovan/honka-honka_new/Music/Sound\\ Effects/apple-radar-alarm.m4a "
+        "--start=+2 "
         "--volume=35 "
-        "--loop-file=2 " // play 3 times total
+        "--loop-file=2 "
     );
 
     return 0;
