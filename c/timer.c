@@ -74,7 +74,8 @@ int main(int argc, char **argv) {
         sleep(1);
     }
     clearLine();
-    printf("timer: 0s\nDING DING DING");
+    printf("timer: 0s\nDING DING DING\n");
+    fflush(stdout);
 
     system(
         "mpv "
