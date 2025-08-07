@@ -74,9 +74,8 @@ int main(int argc, char **argv) {
         sleep(1);
     }
     clearLine();
-    printf("timer: 0s\n");
+    printf("timer: 0s\nDING DING DING");
 
-    printf("DING DING DING\n");
     system(
         "mpv "
         "/home/jovan/honka-honka_new/Music/Sound\\ Effects/apple-radar-alarm.m4a "
