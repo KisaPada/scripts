@@ -85,5 +85,14 @@ int main(int argc, char **argv) {
         "--loop-file=2 "
     );
 
+    while (1) {
+        clearLine();
+        formatTimer(formatStr, timerLen);
+        printf("Timer: %s", formatStr);
+        fflush(stdout);
+        timerLen++;
+        sleep(1);
+    }
+
     return 0;
 }
