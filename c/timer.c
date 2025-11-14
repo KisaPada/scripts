@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
 
     system(
         "mpv "
-        "/home/jovan/honka-honka_new/Music/Sound\\ Effects/apple-radar-alarm.m4a "
+        "/media_mirror/Audio/Sound\\ Effects/apple-radar-alarm.m4a "
         "--start=+2 "
         "--volume=35 "
         "--loop-file=2 "
