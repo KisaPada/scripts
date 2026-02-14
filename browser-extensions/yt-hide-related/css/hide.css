@@ -1,0 +1,12 @@
+ytd-watch-flexy[is-two-columns] #secondary,
+ytd-watch-flexy[is-two-columns] #related,
+ytd-watch-next-secondary-results-renderer,
+ytd-item-section-renderer#related {
+  display: none !important;
+}
+
+/*/* Expand primary column */*/
+/*ytd-watch-flexy[is-two-columns] #primary {*/
+/*  max-width: 100% !important;*/
+/*  flex: 1 1 auto !important;*/
+/*}*/

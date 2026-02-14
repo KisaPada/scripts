@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Hide Related Videos",
+  "version": "1.0.0",
+  "description": "Hides the recommended/related videos sidebar on YouTube watch pages.",
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["js/content.js"],
+      "css": ["css/hide.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
